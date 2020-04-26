@@ -35,9 +35,9 @@ app.delete('/delete/:delete_id',deleteFunc);
 
 //functionHandler
 function indexHandler(req,res){
-    let name = req.body.name;
-    let level = req.body.level;
-    let url = `https://digimon-api.herokuapp.com/api/digimon/name/${name}`;
+    // let name = req.body.name;
+    // let level = req.body.level;
+    let url = `https://digimon-api.herokuapp.com/api/digimon`;
     superagent.get(url)
     .then((result)=>{
        let resultArray = result.body.map(val =>{
@@ -56,15 +56,15 @@ function addToFavorite(req,res){
     //redirect
     client.query(SQL,safeValues)
     .then((result)=>{
-        res.redirect('/favourite',{data: result.rows});
+        res.redirect('/favourite');
     })
 }
 ////
 function getFromDataBase(req,res){
-let SQL = 'SELECT * FROM digimon_table;';
+let SQL = 'SELECT * FROM digimon_table WHERE id=$1;';
 client.query(SQL)
 .then((result)=>{
-    res.render('./favourite.ejs',{data: result.rows})
+    res.render('./pages/favourite',{data: result.rows})
 })
 }
 ////
@@ -77,7 +77,7 @@ function detailFunc(req,res){
     //redirect
     client.query(SQL,safeValues)
     .then((result)=>{
-        res.redirect('./detail',{data: result.rows[0]});
+        res.redirect('.pages/detail',{data: result.rows[0]});
     })
 }
 /////
