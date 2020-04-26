@@ -28,7 +28,8 @@ client.connect()
 //rout
 app.get('/',indexHandler);
 app.get('/add',addToFavorite);
-app.get('/favourite',getFromDataBase);
+app.get('/favouriteR',getFromDataBase);
+app.get('/detail/:id',detailFunc);
 app.put('/update/:update_id',updateFunc);
 app.delete('/delete/:delete_id',deleteFunc);
 
@@ -56,7 +57,7 @@ function addToFavorite(req,res){
     //redirect
     client.query(SQL,safeValues)
     .then((result)=>{
-        res.redirect('/favourite');
+        res.redirect('/favouriteR');
     })
 }
 ////
@@ -77,7 +78,7 @@ function detailFunc(req,res){
     //redirect
     client.query(SQL,safeValues)
     .then((result)=>{
-        res.redirect('.pages/detail',{data: result.rows[0]});
+        res.redirect('./pages/detail',{data: result.rows[0]});
     })
 }
 /////
